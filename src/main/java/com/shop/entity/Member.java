@@ -1,7 +1,7 @@
 package com.shop.entity;
 
 import com.shop.constant.Role;
-import com.shop.dto.MemberFromDto;
+import com.shop.dto.MemberFormDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,14 +29,14 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public static Member createMember(MemberFromDto memberFromDto, PasswordEncoder passwordEncoder){
+    public static Member createMember(MemberFormDto memberFromDto, PasswordEncoder passwordEncoder){
         Member member = new Member();
         member.setName(memberFromDto.getName());
         member.setEmail(memberFromDto.getEmail());
-        member.setAddress(memberFromDto.getEmail());
+        member.setAddress(memberFromDto.getAddress());
         String password = passwordEncoder.encode(memberFromDto.getPassword());
         member.setPassword(password);
-        member.setRole(Role.USER);
+        member.setRole(Role.ADMIN);
         return member;
     }
 
