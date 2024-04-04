@@ -1,9 +1,7 @@
 package com.shop.repository.item;
 
-import com.querydsl.core.BooleanBuilder;
 import com.shop.entity.Item;
-import com.shop.entity.QItem;
-import org.springframework.data.domain.Page;
+import com.shop.repository.ItemRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -12,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item> {
+public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item>, ItemRepositoryCustom {
     List<Item> findByItemNm(String itemNm);
 
     List<Item> findByItemNmOrItemDetail(String itemNm, String itemDetail);

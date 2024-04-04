@@ -1,5 +1,6 @@
 package com.shop.entity;
 
+
 import com.shop.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,6 +30,8 @@ class MemberTest {
         Member newMember = new Member();
         memberRepository.save(newMember);
 
+        System.out.println(newMember);
+
         em.flush();
         em.clear();
 
@@ -36,7 +39,7 @@ class MemberTest {
 
         System.out.println("register time: " + member.getRegTime());
         System.out.println("update time: " + member.getUpdateTime());
-        System.out.println("create time: " + member.getCreateBy());
+        System.out.println("create time: " + member.getCreatedBy());
         System.out.println("modify time: " + member.getModifiedBy());
 
     }
