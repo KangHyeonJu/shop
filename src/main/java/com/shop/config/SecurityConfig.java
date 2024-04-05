@@ -20,6 +20,8 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+//        HttpSessionRequestCache cache = new HttpSessionRequestCache();
+//        cache.setMatchingRequestParameterName(null);
 
          http.formLogin((it) -> it
                 .loginPage("/members/login")
@@ -41,8 +43,10 @@ public class SecurityConfig {
                 .anyRequest().authenticated();
         });
 
+        //http.requestCache((it) -> it.requestCache(cache));
+
         http.exceptionHandling((it) ->
-                it.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                it.authenticationEntryPoint(new CustomAuthenticationEntryPoint("/members/login"))
         );
         return http.build();
     }
