@@ -1,7 +1,6 @@
 package com.shop.controller;
 
 import com.shop.dto.ItemDto;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,7 @@ public class ThymeleafExController {
 
     @GetMapping(value = "/ex01")
     public String thymeleafExample01(Model model){
-        model.addAttribute("data", "타임리프 예제aaaaaaaa");
+        model.addAttribute("data", "타임리프 예제");
         return  "thymeleafEx/thymeleafEx01";
     }
 
