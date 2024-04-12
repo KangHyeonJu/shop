@@ -18,7 +18,7 @@ public abstract class BaseTimeEntity {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime regTime;
-
+//    private String regTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
     @LastModifiedDate
     private LocalDateTime updateTime;
 }

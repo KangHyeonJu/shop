@@ -50,6 +50,7 @@
                 <td th:text="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL} ? '판매중' :' 품절'"></td>
                 <td th:text="${item.createdBy}"></td>
                 <td th:text="${item.regTime}"></td>
+<!--                <td th:text="${#item.regTime.format(item.regTime, 'yyyy-MM-dd')}"></td>-->
             </tr>
             </tbody>
         </table>

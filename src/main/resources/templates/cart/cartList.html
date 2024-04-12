@@ -180,8 +180,9 @@
     <table class="table">
       <colgroup>
         <col width="15%"/>
-        <col width="70%"/>
-        <col width="15%"/>
+        <col width="60%"/>
+        <col width="20%"/>
+        <col width="5%"/>
       </colgroup>
       <thead>
       <tr class="text-center">
@@ -190,6 +191,7 @@
         </td>
         <td>상품정보</td>
         <td>상품금액</td>
+        <td></td>
       </tr>
       </thead>
       <tbody>
@@ -207,15 +209,17 @@
               <span class="input-group mt-2">
                 <span th:id="'price_' + ${cartItem.cartItemId}" th:data-price="${cartItem.price}" th:text="${cartItem.price} + '원'" class="align-self-center mr-2"></span>
                   <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}" th:value="${cartItem.count}" min="1" onchange="changeCount(this)" class="form-control mr-2">
-                  <button type="button" class="close" aria-label="Close">
-                    <span aria-hidden="true" th:data-id="${cartItem.cartItemId}" onclick="deleteCartItem(this)">&times;</span>
-                  </button>
               </span>
             </div>
           </div>
         </td>
         <td class="text-center align-middle">
           <span th:id="'totalPrice_' + ${cartItem.cartItemId}" name="totalPrice" th:text="${cartItem.price * cartItem.count} + '원'"></span>
+        </td>
+        <td class="text-center align-middle">
+          <button type="button" class="close" aria-label="Close">
+            <span aria-hidden="true" th:data-id="${cartItem.cartItemId}" onclick="deleteCartItem(this)">&times;</span>
+          </button>
         </td>
       </tr>
       </tbody>

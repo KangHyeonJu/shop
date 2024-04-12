@@ -88,7 +88,7 @@ public class ItemController {
     @GetMapping(value = {"/admin/items", "/admin/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
         //Pageable pageable1 = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
-        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+        Pageable pageable = PageRequest.of(page.orElse(0), 10);
         //Pageable pageable2 = PageRequest.of(page.orElseGet(() -> 0), 3);
 
         System.out.println(itemSearchDto.getSearchDateType());
