@@ -4,6 +4,7 @@ import com.shop.dto.CartDetailDto;
 import com.shop.dto.CartItemDto;
 import com.shop.dto.CartOrderDto;
 import com.shop.service.CartService;
+import com.shop.service.ItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
-
+    private final ItemService itemService;
     @PostMapping("/cart")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDto cartItemDto, BindingResult bindingResult, Principal principal){
         if(bindingResult.hasErrors()){
@@ -46,7 +47,9 @@ public class CartController {
     @GetMapping("/cart")
     public String orderHist(Principal principal, Model model){
         List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
+
         model.addAttribute("cartItems", cartDetailList);
+
         return "cart/cartList";
     }
 

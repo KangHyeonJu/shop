@@ -11,6 +11,8 @@ public class CartDetailDto {
 
     private String itemNm;
 
+    private Long itemId;
+
     private int price;
 
     private int count;

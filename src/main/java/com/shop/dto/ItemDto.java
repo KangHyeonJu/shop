@@ -14,7 +14,7 @@ public class ItemDto {
     private Integer price;
     private String itemDetail;
     private String sellStatCd;
-//    private LocalDateTime regTime;
-    private String regTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+    private LocalDateTime regTime;
+    private String regDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
     private LocalDateTime updateTime;
 }
