@@ -32,12 +32,20 @@
             });
         }
 
-        function deleteItemImg(obj){
-            if(!confirm("삭제하시겠습니까?")){
+        function deleteItemImg(btn) {
+            if (!confirm("삭제하시겠습니까?")) {
                 return;
             }
+            console.log("???");
 
-            $('#itemImgFile').val('');
+            var index = $(btn).siblings('.custom-file-input').attr('id').split('_')[1];
+            console.log(index);
+            $('#itemImgFile_' + index).val("");
+           // clearLabel($(btn).siblings('.custom-file-input'));
+        }
+
+        function clearLabel(input) {
+            $(input).siblings('label').html('');
         }
 
     </script>
@@ -120,11 +128,11 @@
         <div th:if = "${not #lists.isEmpty(itemFormDto.itemImgDtoList)}">
             <div class="form-group" th:each="itemImgDto, status: ${itemFormDto.itemImgDtoList}">
                 <div class="custom-file img-div">
-                    <input type="file" class="custom-file-input" name="itemImgFile" id="itemImgFile">
+                    <input type="file" class="custom-file-input" name="itemImgFile" th:id="'itemImgFile_' + ${status.index}">
                     <input type="hidden" name="itemImgIds" th:value="${itemImgDto.id}">
                     <label class="custom-file-label" th:text="${not #strings.isEmpty(itemImgDto.oriImgName)} ? ${itemImgDto.oriImgName} : '상품이미지' + ${status.index+1}"></label>
-                    <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true" th:data-id="${itemImgDto.id}" onclick="deleteItemImg(this)">&times;</span>
+                    <button type="button" class="close" aria-label="Close" onclick="deleteItemImg(this)">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
             </div>
