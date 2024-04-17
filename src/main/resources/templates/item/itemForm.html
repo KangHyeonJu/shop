@@ -44,6 +44,18 @@
            // clearLabel($(btn).siblings('.custom-file-input'));
         }
 
+        function deleteItemImg2(btn) {
+            if (!confirm("삭제하시겠습니까?")) {
+                return;
+            }
+
+            // 해당 버튼의 부모 요소인 div.custom-file를 찾고 그 안에 있는 파일 선택(input) 요소의 ID를 가져옵니다.
+            var inputId = $(btn).closest('.custom-file').find('.custom-file-input').attr('id');
+
+            // 가져온 ID를 사용하여 해당 파일 선택(input) 요소를 찾아 value를 초기화합니다.
+            $('#' + inputId).val('');
+        }
+
         function clearLabel(input) {
             $(input).siblings('label').html('');
         }
@@ -119,8 +131,11 @@
         <div th:if="${#lists.isEmpty(itemFormDto.itemImgDtoList)}">
             <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">
                 <div class="custom-file img-div">
-                    <input type="file" class="custom-file-input" name="itemImgFile">
+                    <input type="file" class="custom-file-input" name="itemImgFile" th:id="'itemImgFile_' + ${num}">
                     <label class="custom-file-label" th:text="상품이미지 + ${num}"></label>
+                    <button type="button" class="close" aria-label="Close" onclick="deleteItemImg2(this)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             </div>
         </div>
