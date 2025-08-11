@@ -30,6 +30,9 @@ public class ItemService {
         itemRepository.save(item);
 
         for(int i=0; i<itemImgFileList.size(); i++){
+            MultipartFile file = itemImgFileList.get(i);
+            if (file == null || file.isEmpty()) continue;
+
             ItemImg itemImg = new ItemImg();
             itemImg.setItem(item);
             if(i == 0)

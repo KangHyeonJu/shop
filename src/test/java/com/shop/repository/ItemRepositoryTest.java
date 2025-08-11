@@ -34,6 +34,10 @@ class ItemRepositoryTest {
     @Test
     @DisplayName("상품 저장 테스트")
     public void createItemTest(){
+        //DB에 값 저장(INSERT)하기
+        //1. 엔티티 객체를 만든다.
+        //2. 엔티티 객체에 저장하고 싶은 값을 담는다.
+        //3. JPA Repository를 이용해 저장(save ==> persist + flush)한다.
         Item item = new Item();
         item.setItemNm("테스트 상품");
         item.setPrice(10000);
@@ -94,7 +98,7 @@ class ItemRepositoryTest {
         this.createItemList();
         List<Item> itemList = itemRepository.findByPriceLessThanOrderByPriceDesc(10005);
         for (Item item:itemList){
-            System.out.println(item.toString());
+            System.out.println(item);
         }
     }
 
