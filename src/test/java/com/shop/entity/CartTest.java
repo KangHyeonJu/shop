@@ -81,6 +81,8 @@ class CartTest {
         System.out.println("저장하기 전 member의 주소값" + member.hashCode());
 
         Optional<Cart> savedCartOp = cartRepository.findById(cart.getId());
+
+
         //옵셔널 안에 값이 존재하면 꺼내서 받고, null 이면 EntityNotFoundException 던지기
         Cart savedCart = savedCartOp.orElseThrow(EntityNotFoundException::new);
 

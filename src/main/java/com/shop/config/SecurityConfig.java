@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .requestMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
 
                 //로그인 후 admin 역할을 가진 사용자만 접근 가능
-                .requestMatchers(antMatcher("/admin/**")).hasRole("ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
 
                 .anyRequest().authenticated();  //그 외 모든 요청 로그인한 사용자만 접근 가능
         });

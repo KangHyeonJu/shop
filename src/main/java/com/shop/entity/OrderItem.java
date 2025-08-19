@@ -21,8 +21,6 @@ public class OrderItem extends BaseEntity{
 
     private int orderPrice;
     private int count;
-//    private LocalDateTime regTime;
-//    private LocalDateTime updateTime;
 
     public static OrderItem createOrderItem(Item item, int count){
         OrderItem orderItem = new OrderItem();

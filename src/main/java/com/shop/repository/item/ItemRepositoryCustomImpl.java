@@ -1,4 +1,4 @@
-package com.shop.repository;
+package com.shop.repository.item;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
@@ -8,8 +8,6 @@ import com.shop.dto.ItemSearchDto;
 import com.shop.dto.MainItemDto;
 import com.shop.dto.QMainItemDto;
 import com.shop.entity.Item;
-import com.shop.entity.QItem;
-import com.shop.entity.QItemImg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,11 +16,14 @@ import org.thymeleaf.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
+import static com.shop.entity.QItem.item;
+import static com.shop.entity.QItemImg.itemImg;
 
 @RequiredArgsConstructor
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     private final JPAQueryFactory queryFactory;
-    private final QItem item = QItem.item;
 
     //    public ItemRepositoryCustomImpl(JPAQueryFactory queryFactory){
 //        this.queryFactory = queryFactory;
@@ -58,7 +59,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     private BooleanExpression itemNmLike(String searchQuery){
-        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like("%" + searchQuery + "%");
+        return StringUtils.isEmpty(searchQuery) ? null : item.itemNm.like("%" + searchQuery + "%");
     }
 
     @Override
@@ -70,21 +71,19 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                                                         .offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
 
 
-        Long total = queryFactory.select(Wildcard.count).from(item)
+        Long totalCount = queryFactory.select(Wildcard.count).from(item)
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
-                        searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery())).orderBy(item.id.desc())
-                .offset(pageable.getOffset()).limit(pageable.getPageSize()).fetchOne();
+                        searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
+                .fetchOne();
 
-        if(total == null) total = 0L;
+        Optional<Long> total = Optional.ofNullable(totalCount);
 
-        return new PageImpl<>(content, pageable, total);
+        return new PageImpl<>(content, pageable, total.orElse(0L));
     }
 
     @Override
     public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
-        QItemImg itemImg = QItemImg.itemImg;
-
         List<MainItemDto> content = queryFactory
                 .select(
                         new QMainItemDto(
@@ -95,7 +94,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                                 item.price
                         )
                 ).from(itemImg)
-                .join(itemImg.item, item)
+                .innerJoin(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
                 .where(searchByLike("itemNm",  itemSearchDto.getSearchQuery()))
                 .orderBy(item.id.desc())
@@ -103,16 +102,16 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        Long total = queryFactory
+        Long totalCount = queryFactory
                 .select(Wildcard.count)
                 .from(itemImg)
-                .join(itemImg.item, item)
+                .innerJoin(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
                 .where(searchByLike("itemNm", itemSearchDto.getSearchQuery()))
                 .fetchOne();
 
-        if(total == null) total=0L;
+        Optional<Long> total = Optional.ofNullable(totalCount);
 
-        return new PageImpl<>(content, pageable, total);
+        return new PageImpl<>(content, pageable, total.orElse(0L));
     }
 }
