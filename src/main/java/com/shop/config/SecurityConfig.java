@@ -31,7 +31,7 @@ public class SecurityConfig {
         //1. 로그인 설정
          http.formLogin((it) -> it
                 .loginPage("/members/login")    //커스텀 로그인 페이지 url
-                .defaultSuccessUrl("/")         //로그인 성공 시 이동할 경로
+                .defaultSuccessUrl("/", true)         //로그인 성공 시 이동할 경로
                 .usernameParameter("email")     //로그인에 사용할 파라미터 이름 (기본: username)
                 .failureUrl("/members/login/error") //로그인 실패 시 이동 경로
         );
